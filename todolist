@@ -1,0 +1,79 @@
+tasks = {}
+task_id = 1
+
+while True:
+    print("\nTo-Do List Menu:")
+    print("1. Display Tasks")
+    print("2. Add Task")
+    print("3. Update Task")
+    print("4. Delete Task")
+    print("5. Exit")
+    
+    choice = input("Enter your choice: ")
+    
+    if choice == '1':
+        if not tasks:
+            print("No tasks available.")
+        else:
+            print("\nAvailable Tasks:")
+            for id, task in tasks.items():
+                status = "Done" if task['done'] else "Not Done"
+                print(f"{id}. {task['name']} - {status}")
+    
+    elif choice == '2':
+        task_name = input("Enter task name: ")
+        tasks[task_id] = {'name': task_name, 'done': False}
+        print(f"Task '{task_name}' added successfully.")
+        task_id += 1
+    
+    elif choice == '3':
+        if not tasks:
+            print("No tasks available.")
+        else:
+            print("\nAvailable Tasks:")
+            for id, task in tasks.items():
+                status = "Done" if task['done'] else "Not Done"
+                print(f"{id}. {task['name']} - {status}")
+            
+            try:
+                task_id_to_update = int(input("Enter the task ID to update: "))
+                if task_id_to_update in tasks:
+                    task_name = input("Enter new task name (press Enter to skip): ")
+                    if task_name:
+                        tasks[task_id_to_update]['name'] = task_name
+                    status = input("Mark task as done? (yes/no): ")
+                    if status.lower() == 'yes':
+                        tasks[task_id_to_update]['done'] = True
+                    else:
+                        tasks[task_id_to_update]['done'] = False
+                    print(f"Task {task_id_to_update} updated successfully.")
+                else:
+                    print("Task ID not found.")
+            except ValueError:
+                print("Invalid task ID.")
+    
+    elif choice == '4':
+        if not tasks:
+            print("No tasks available.")
+        else:
+            print("\nAvailable Tasks:")
+            for id, task in tasks.items():
+                status = "Done" if task['done'] else "Not Done"
+                print(f"{id}. {task['name']} - {status}")
+            
+            try:
+                task_id_to_delete = int(input("Enter the task ID to delete: "))
+                if task_id_to_delete in tasks:
+                    del tasks[task_id_to_delete]
+                    print(f"Task {task_id_to_delete} deleted successfully.")
+                else:
+                    print("Task ID not found.")
+            except ValueError:
+                print("Invalid task ID.")
+    
+    elif choice == '5':
+        print("Exiting the application.")
+        break
+    
+    else:
+        print("Invalid choice. Please choose a valid option.")
